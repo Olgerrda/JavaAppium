@@ -10,6 +10,9 @@ public class OnboardingTests extends CoreTestCase {
 
     @Test
     public void testSwipeOnboarding() {
+        if (Platform.getInstance().isMW()) {
+            return;
+        }
         OnboardingPageObject OnboardingPageObject = OnboardingPageObjectFactory.get(driver);
         OnboardingPageObject.waitForSkipOnboarding();
         OnboardingPageObject.swipeOnboarding(6);
@@ -17,7 +20,7 @@ public class OnboardingTests extends CoreTestCase {
 
     @Test
     public void testPassThroughWelcome() {
-        if (Platform.getInstance().isAndroid()) {
+        if ((Platform.getInstance().isAndroid()) || (Platform.getInstance().isMW())) {
             return;
         }
         OnboardingPageObject OnboardingPageObject = OnboardingPageObjectFactory.get(driver);

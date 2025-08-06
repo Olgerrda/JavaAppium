@@ -8,7 +8,8 @@ public class MWArticlePageObject extends ArticlePageObject {
         TITLE_BY_SUBSTRING_TPL = "xpath://span[contains(@class, 'mw-page-title-main') and contains(text(), '{SUBSTRING}')]"; //"css:span.mw-page-title-main[contains(text(),'{SUBSTRING}')]";
         FOOTER_ELEMENT = "css:footer";
         //SAVE_OPTION_BUTTON = "id:org.wikipedia.alpha:id/page_save";
-        OPTIONS_ADD_TO_LIST = "css:#page-actions-watch a#ca-watch";
+        OPTIONS_ADD_TO_LIST = "css:#page-actions-watch a#ca-watch span.minerva-icon--star";
+        OPTIONS_REMOVE_FROM_LIST = "css:#page-actions-watch a#ca-watch span.minerva-icon--unStar";
         //MY_LIST_INPUT_FIELD = "id:org.wikipedia.alpha:id/text_input";
        // MY_LIST_OK_BUTTON = "id:android:id/button1";
         //BACK_FROM_ARTICLE_BUTTON = "id:Back";

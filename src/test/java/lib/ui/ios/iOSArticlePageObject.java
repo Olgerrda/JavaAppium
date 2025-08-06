@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class iOSArticlePageObject extends ArticlePageObject {
+
     static {
         TITLE_BY_SUBSTRING_TPL = "xpath://XCUIElementTypeStaticText[@name='{SUBSTRING}']";
         FOOTER_ELEMENT = "id:View article in browser";

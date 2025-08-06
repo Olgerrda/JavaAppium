@@ -9,6 +9,9 @@ import org.junit.Test;
 public class MyListsTests extends CoreTestCase {
 
     private static final String name_of_folder = "Learning programming";
+    private static final String
+            login = "Olgalearn",
+            password = "Test12345678";
 
     @Test
     public void testSaveFirstArticleToMyList() {
@@ -18,22 +21,33 @@ public class MyListsTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickAtArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickAtArticleWithSubstring("bject-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.closeWikipediaGamesDialog();
-        ArticlePageObject.waitForTitleElement("Java (programming language)");
+        String title = "Java (programming language)";
+        ArticlePageObject.waitForTitleElement(title);
 
-        String article_title = ArticlePageObject.getArticleTitle("Java (programming language)");
+        String article_title = ArticlePageObject.getArticleTitle(title);
 
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyList(name_of_folder);
         } else {
             ArticlePageObject.addArticleToMySaved();
         }
+        if (Platform.getInstance().isMW()) {
+            AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+            ArticlePageObject.waitForTitleElement(title);
+            assertEquals("We are not on the same page after login", article_title, ArticlePageObject.getArticleTitle(title));
+            ArticlePageObject.addArticleToMySaved();
+        }
         ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.openNavigation();
         NavigationUI.clickMyLists();
 
         ReadingListsPageObject ReadingListsPageObject = ReadingListsPageObjectFactory.get(driver);

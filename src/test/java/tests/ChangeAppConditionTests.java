@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.ArticlePageObject;
 import lib.ui.OnboardingPageObject;
 import lib.ui.SearchPageObject;
@@ -13,6 +14,9 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testChangeScreenOrientationOnSearchResults() {
+        if (Platform.getInstance().isMW()) {
+            return;
+        }
         OnboardingPageObject OnboardingPageObject = OnboardingPageObjectFactory.get(driver);
         OnboardingPageObject.clickSkipOnboarding();
 
@@ -36,6 +40,9 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testCheckSearchArticleInBackground() {
+        if (Platform.getInstance().isMW()) {
+            return;
+        }
         OnboardingPageObject OnboardingPageObject = OnboardingPageObjectFactory.get(driver);
         OnboardingPageObject.clickSkipOnboarding();
 
