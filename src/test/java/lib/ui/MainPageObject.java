@@ -243,7 +243,7 @@ public class MainPageObject {
 
     public void assertElementNotPresent(String locator, String error_message) {
         int amount_of_elements = getAmountOfElements(locator);
-        if (amount_of_elements > 0 ) {
+        if (amount_of_elements <= 0 ) {
             String default_message = "An element '" + locator + "' supposed to be not present";
             throw new AssertionError(default_message + " " + error_message);
         }
@@ -269,8 +269,8 @@ public class MainPageObject {
         By by = this.getLocatorByString(locator);
         List element = driver.findElements(by);
         int amount_of_elements = element.size();
-        if (amount_of_elements <= 0) {
-            String default_message = "An element '" + locator + "' supposed to be not present: ";
+        if (amount_of_elements > 0) {
+            String default_message = "An element '" + locator + "' supposed to be present: ";
             throw new AssertionError(default_message + " " + error_message);
         }
         Assert.assertNotNull(error_message, element);

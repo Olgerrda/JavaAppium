@@ -1,6 +1,5 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -23,10 +22,6 @@ abstract public class ReadingListsPageObject extends MainPageObject {
                 (folder_name_locator, "Cannot find folder by name " + folder_name, 5);
     }
 
-    public static String getRemoveButtonByTitle(String article_title) {
-        return REMOVE_FROM_SAVED_BUTTON.replace("{TITLE}", article_title);
-    }
-
     public void waitForArticleToAppearByTitle(String article_title) {
         String article_title_locator = getLocatorOfElement(ARTICLE_BY_TITLE_TPL, article_title);
         this.waitForElementPresent
@@ -39,24 +34,24 @@ abstract public class ReadingListsPageObject extends MainPageObject {
                 (article_title_locator, "Cannot delete saved article " + article_title, 15);
     }
 
-    public void swipeByArticleToDelete(String article_title) {
+    public void deleteArticleFromReadingList(String article_title) {
         String article_title_locator = getLocatorOfElement(ARTICLE_BY_TITLE_TPL, article_title);
         this.waitForArticleToAppearByTitle(article_title);
 
         if (Platform.getInstance().isAndroid() || Platform.getInstance().isIOS()) {
             this.swipeElementToLeft(article_title_locator, "Cannot find saved article");
         } else {
-            String remove_locator = getRemoveButtonByTitle(article_title);
+            String remove_locator = getLocatorOfElement(REMOVE_FROM_SAVED_BUTTON, article_title);
             this.waitForElementAndClick(remove_locator, "Cannot click button to remove article from saved", 10);
+            driver.navigate().refresh();
         }
 
         if (Platform.getInstance().isIOS()) {
             this.waitForElementAndClick(DELETE_SAVED_ARTICLE_BUTTON, "Cannot find Delete saved article button", 5);
         }
-        if (Platform.getInstance().isMW()) {
-            driver.navigate().refresh();
+        if (!Platform.getInstance().isMW()) {
+            this.waitForArticleToDisappearByTitle(article_title);
         }
-        this.waitForArticleToDisappearByTitle(article_title);
     }
 
     public void clickCloseDialogButton() {
@@ -65,5 +60,10 @@ abstract public class ReadingListsPageObject extends MainPageObject {
         } else {
             System.out.println("Method clickCloseDialogButton() is not applicable for platform " + Platform.getInstance().getPlatformVar());
         }
+    }
+
+    public void checkArticleInReadingList(String article_title) {
+        String article_title_locator = getLocatorOfElement(ARTICLE_BY_TITLE_TPL, article_title);
+        this.assertElementNotPresent(article_title_locator, "Article is not in the reading list");
     }
 }

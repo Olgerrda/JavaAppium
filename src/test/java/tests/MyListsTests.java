@@ -55,7 +55,50 @@ public class MyListsTests extends CoreTestCase {
             ReadingListsPageObject.openFolderByName(name_of_folder);
         }
         ReadingListsPageObject.clickCloseDialogButton();
-        ReadingListsPageObject.swipeByArticleToDelete(article_title);
+        ReadingListsPageObject.deleteArticleFromReadingList(article_title);
+    }
+
+    @Test
+    public void testDeleteOneOfTwoSavedArticles() {
+        if (Platform.getInstance().isMW()) {
+            OnboardingPageObject OnboardingPageObject = OnboardingPageObjectFactory.get(driver);
+            OnboardingPageObject.clickSkipOnboarding();
+
+            SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+            SearchPageObject.initSearchInput();
+            String search_line =  "Java";
+            SearchPageObject.typeSearchLine(search_line);
+            SearchPageObject.clickAtArticleWithSubstring("bject-oriented programming language");
+
+            ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
+            String title = "Java (programming language)";
+            ArticlePageObject.waitForTitleElement(title);
+            ArticlePageObject.addArticleToMySaved();
+
+            AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement(title);
+            assertEquals("We are not on the same page after login", title, ArticlePageObject.getArticleTitle(title));
+            ArticlePageObject.addArticleToMySaved();
+
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine(search_line);
+            SearchPageObject.clickAtArticleWithSubstring("igh-level programming language");
+            ArticlePageObject.addArticleToMySaved();
+
+            NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+            NavigationUI.openNavigation();
+            NavigationUI.clickMyLists();
+
+            ReadingListsPageObject ReadingListsPageObject = ReadingListsPageObjectFactory.get(driver);
+            ReadingListsPageObject.deleteArticleFromReadingList(search_line);
+            ReadingListsPageObject.checkArticleInReadingList(search_line);
+        } else {
+            System.out.println("Test applicable only for mobile web");
+        }
     }
 
 }

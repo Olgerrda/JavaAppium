@@ -24,8 +24,9 @@ abstract public class NavigationUI extends MainPageObject {
 
     public void clickMyLists() {
         if (Platform.getInstance().isMW()) {
-            this.tryClickElementWithFewAttempts(TAB_READING_LISTS, "Cannot find navigation button to My lists", 5);
+            this.tryClickElementWithFewAttempts(TAB_READING_LISTS, "Cannot find navigation button to My lists with some attempts", 5);
+        } else {
+            this.waitForElementAndClick(TAB_READING_LISTS, "Cannot find navigation button to My lists", 5);
         }
-        this.waitForElementAndClick(TAB_READING_LISTS, "Cannot find navigation button to My lists", 5);
     }
 }
