@@ -42,6 +42,7 @@ abstract public class SearchPageObject extends MainPageObject {
     public void waitForSearchResult(String search_string){
         String search_result_xpath = getLocatorOfElement(SEARCH_RESULT_BY_SUBSTRING_TPL, search_string);
         this.waitForElementPresent(search_result_xpath, "Cannot find search result with search_string " + search_string, 15);
+        screenshot(this.takeScreenshot("search_res"));
     }
 
     @Step("Waiting for search result and select an article by substring in article title")
@@ -64,12 +65,14 @@ abstract public class SearchPageObject extends MainPageObject {
     @Step("Making sure there are no results for the search")
     public void assertThereIsNoResultOfSearch(String search_string) {
         this.assertElementNotPresent(getLocatorOfElement(SEARCH_RESULT_BY_SUBSTRING_TPL, search_string), "We supposed not find any results");
+        screenshot(this.takeScreenshot("no_results"));
     }
 
     @Step("Waiting for multiple search results")
     public void waitForMultipleSearchResults (String search_string) {
         waitForMultipleElementsPresent
                 (getLocatorOfElement(SEARCH_RESULTS_LIST_TPL, search_string), "No search results found", 15);
+        screenshot(this.takeScreenshot("multiple"));
     }
 
     @Step("Waiting for no search results presented")

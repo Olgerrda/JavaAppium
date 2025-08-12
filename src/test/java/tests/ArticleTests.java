@@ -17,9 +17,9 @@ import org.junit.Test;
 public class ArticleTests extends CoreTestCase {
 
     @Test
-    @Features(value = {@Feature(value="Search"),@Feature(value="Article")})
+    @Features(value = {@Feature(value="Search"),@Feature(value="Article"),@Feature(value="Onboarding")})
     @DisplayName("Compare article title with expected one")
-    @Description("We open 'Java Object-oriented programing language' and make sure the title is as expected")
+    @Description("Open 'Java Object-oriented programing language' and make sure the title is as expected")
     @Severity(value = SeverityLevel.CRITICAL)
     @Step("Starting test testCompareArticleTitle")
     public void testCompareArticleTitle() {
@@ -41,7 +41,7 @@ public class ArticleTests extends CoreTestCase {
     @Test
     @Features(value = {@Feature(value="Search"),@Feature(value="Article")})
     @DisplayName("Swipe article to the footer")
-    @Description("We open an article and swipe it to the footer")
+    @Description("Open an article and swipe it to the footer")
     @Severity(value = SeverityLevel.NORMAL)
     @Step("Starting test testSwipeArticle")
     public void testSwipeArticle() {

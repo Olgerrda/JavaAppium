@@ -62,6 +62,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         } else {
             this.scrollWebPageTillElementNotVisible(FOOTER_ELEMENT, "Cannot find the end of article", 40);
         }
+        screenshot(this.takeScreenshot("footer"));
     }
 
     @Step("Adding the article to my list")
@@ -84,6 +85,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             this.removeArticleFromSavedIfAdded();
         }
         this.waitForElementAndClick(OPTIONS_ADD_TO_LIST, "Cannot find option to add article to reading list", 5);
+        screenshot(this.takeScreenshot("add_to_list"));
     }
 
     @Step("Removing the article from saved if it has been added")

@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -24,6 +25,7 @@ public class OnboardingPageObject extends MainPageObject {
         super(driver);
     }
 
+    @Step("Click Skip onboarding")
     public void clickSkipOnboarding() {
         if (!Platform.getInstance().isMW()) {
             this.waitForElementAndClick(SKIP_ONBOARDING_BUTTON, "Cannot find Skip button", 15);
@@ -38,6 +40,7 @@ public class OnboardingPageObject extends MainPageObject {
         this.swipeLeftToElement(GET_STARTED_BUTTON,"Cannot find Get started button", max_swipes);
     }
 
+    @Step("Swipe onboarding screen")
     public void swipeOnboardingLeft(int time_of_swipe_ms) {
         this.swipeLeft(time_of_swipe_ms);
     }
@@ -47,11 +50,13 @@ public class OnboardingPageObject extends MainPageObject {
                 (getLocatorOfElement(ONBOARDING_SCREEN_TITLE_TPL, screen_title), "Cannot load onboarding screen with title " + screen_title, 15);
     }
 
+    @Step("Finish onboarding")
     public void finishOnboarding () {
         this.waitForElementAndClick
                 (GET_STARTED_BUTTON, "Cannot find Get Started button ", 15);
         this.waitForElementPresent
                 (WIKIPEDIA_HEADER, "Cannot find Wikipedia header", 15);
+        screenshot(this.takeScreenshot("finished_onboarding"));
     }
 
     public void waitForLearnMoreLink() {
@@ -70,14 +75,17 @@ public class OnboardingPageObject extends MainPageObject {
         this.waitForElementPresent(LEARN_MORE_ABOUT_DATA, "Cannot find 'Learn more about data collected' link", 10);
     }
 
+    @Step("Click Next at onboarding")
     public void clickNextButton() {
         this.waitForElementAndClick(NEXT_BUTTON, "Cannot find and click Next button", 10);
     }
 
+    @Step("Click Get Started at onboarding")
     public void clickGetStartedButton() {
         this.waitForElementAndClick(GET_STARTED_BUTTON, "Cannot find and click Get Started button", 10);
     }
 
+    @Step("Click Skip onboarding")
     public void clickSkip() {
         this.waitForElementAndClick(SKIP_BUTTON, "Cannot find Skip button", 20);
     }
