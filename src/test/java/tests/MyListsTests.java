@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.*;
 import lib.ui.factories.*;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
@@ -41,7 +42,7 @@ public class MyListsTests extends CoreTestCase {
             Auth.enterLoginData(login, password);
             Auth.submitForm();
             ArticlePageObject.waitForTitleElement(title);
-            assertEquals("We are not on the same page after login", article_title, ArticlePageObject.getArticleTitle(title));
+            Assert.assertEquals("We are not on the same page after login", article_title, ArticlePageObject.getArticleTitle(title));
             ArticlePageObject.addArticleToMySaved();
         }
         ArticlePageObject.closeArticle();
@@ -81,7 +82,7 @@ public class MyListsTests extends CoreTestCase {
             Auth.submitForm();
 
             ArticlePageObject.waitForTitleElement(title);
-            assertEquals("We are not on the same page after login", title, ArticlePageObject.getArticleTitle(title));
+            Assert.assertEquals("We are not on the same page after login", title, ArticlePageObject.getArticleTitle(title));
             ArticlePageObject.addArticleToMySaved();
 
             SearchPageObject.initSearchInput();

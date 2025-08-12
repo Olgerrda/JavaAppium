@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -24,6 +25,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         super(driver);
     }
 
+    @Step("Closing Wikipedia games dialog (the method does nothing for iOS and Mobile Web)")
     public void closeWikipediaGamesDialog() {
         if (Platform.getInstance().isAndroid()) {
             this.waitForElementAndClick(WIKIGAMES_DIALOG_CLOSE_BUTTON, "Cannot find dialog's close button", 15);
@@ -31,13 +33,16 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Waiting for title on the article page")
     public WebElement waitForTitleElement(String substring) {
         String search_result_xpath = getLocatorOfElement(TITLE_BY_SUBSTRING_TPL, substring);
         return this.waitForElementPresent(search_result_xpath, "Cannot find title " + substring + " on page", 15);
     }
 
+    @Step("Getting article title")
     public String getArticleTitle(String substring) {
         WebElement title_element = waitForTitleElement(substring);
+        screenshot(this.takeScreenshot("article_title"));
         if (Platform.getInstance().isAndroid()) {
             return title_element.getAttribute("text");
         } else if (Platform.getInstance().isIOS()){
@@ -48,6 +53,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     }
 
+    @Step("Swiping to footer on article page")
     public void swipeToFooter() {
         if (Platform.getInstance().isAndroid()) {
             this.swipeUpToFindElement(FOOTER_ELEMENT, "Cannot find the end of article", 40);
@@ -58,6 +64,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Adding the article to my list")
     public void addArticleToMyList(String name_of_folder) {
         this.waitForElementAndClick(
                 SAVE_OPTION_BUTTON, "Cannot find button to save article", 5);
@@ -71,6 +78,7 @@ abstract public class ArticlePageObject extends MainPageObject {
                 MY_LIST_OK_BUTTON, "Cannot press Ok button", 5);
     }
 
+    @Step("Adding the article to my saved articles")
     public void addArticleToMySaved() {
         if (Platform.getInstance().isMW()) {
             this.removeArticleFromSavedIfAdded();
@@ -78,6 +86,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.waitForElementAndClick(OPTIONS_ADD_TO_LIST, "Cannot find option to add article to reading list", 5);
     }
 
+    @Step("Removing the article from saved if it has been added")
     public void removeArticleFromSavedIfAdded() {
         if (this.isElementPresent(OPTIONS_REMOVE_FROM_LIST)) {
             this.waitForElementAndClick(OPTIONS_REMOVE_FROM_LIST, "Cannot click button to remove from saved", 1);
@@ -85,6 +94,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Closing the article")
     public void closeArticle() {
         if ((Platform.getInstance().isIOS()) || (Platform.getInstance().isAndroid())) {
             this.waitForElementAndClick(
@@ -97,6 +107,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     }
 
+    @Step("Checking the article's title")
     public void checkArticleTitle(String substring) {
         this.assertElementPresent(getLocatorOfElement(TITLE_BY_SUBSTRING_TPL, substring), "Cannot find the title of article");
     }
